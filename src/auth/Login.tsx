@@ -16,17 +16,17 @@ function Login() {
         <input
           type="text"
           placeholder="Username"
-          className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] focus:outline-none focus:border-[#4e9bff] w-full"
+          className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#4e9bff] w-full transition- duration-300 ease-in-out "
         />
         <input
           type="password"
           placeholder="Password"
-          className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] focus:outline-none focus:border-[#4e9bff] w-full"
+          className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#4e9bff] w-full transition- duration-300 ease-in-out"
         />
 
         <button
           type="submit"
-          className="bg-[#8088b1] p-2 rounded-md hover:bg-[#6e72a2] active:bg-[#626493]"
+          className="bg-[#8088b1] p-2 rounded-md hover:bg-[#6e72a2] active:bg-[#626493] transition-all duration-300 ease-in-out"
         >
           Login
         </button>
