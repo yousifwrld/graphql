@@ -5,6 +5,9 @@ function Login() {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // State for error message
+  const [errorMessage, setErrorMessage] = useState("");
+
   // Function to handle form submission
   async function handleFormSubmission(event: React.FormEvent<HTMLFormElement>) {
     // Prevent default form submission
@@ -12,6 +15,7 @@ function Login() {
 
     // Validate inputs
     if (!usernameOrEmail.trim() || !password.trim()) {
+      setErrorMessage("Please enter a username or email and password.");
       return;
     }
 
@@ -39,7 +43,7 @@ function Login() {
         console.log(data);
         // Handle errors
       } else {
-        console.error(response.status, response.statusText);
+        setErrorMessage("User does not exist or password incorrect");
         return;
       }
     } catch (error) {
@@ -73,6 +77,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
+        {errorMessage && (
+          <p className="text-red-500 italic text-center">{errorMessage}</p>
+        )}
         <button
           type="submit"
           className="bg-[#5ed9d1] text-lg p-2 rounded-md hover:bg-[#4bbab3] active:bg-[#43a19a] transition-all duration-300 ease-in-out text-[#1b1b26]"
