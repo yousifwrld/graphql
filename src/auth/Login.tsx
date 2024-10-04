@@ -1,51 +1,87 @@
 import { useState } from "react";
 
 function Login() {
-  // States for username and password input
-  const [username, setUsername] = useState("");
+  // States for usernameOrEmail and password input
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Function to handle form submission
+  async function handleFormSubmission(event: React.FormEvent<HTMLFormElement>) {
+    // Prevent default form submission
+    event.preventDefault();
+
+    // Validate inputs
+    if (!usernameOrEmail.trim() || !password.trim()) {
+      return;
+    }
+
+    // Create the basic auth crendentials
+    const credentials = `${usernameOrEmail}:${password}`;
+    // Encode the crendentials
+    const encodedCredentials = btoa(credentials);
+
+    try {
+      // Send the POST request with the encoded crendentials
+      const response = await fetch(
+        "https://learn.reboot01.com/api/auth/signin",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Basic ${encodedCredentials}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Check if the request was successful
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        // Handle errors
+      } else {
+        console.error(response.status, response.statusText);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
-      <h1
-        className="text-7xl font-bold text-center p-10 
-        text-[#3a3a4e]"
-      >
+      <h1 className="text-7xl font-bold text-center p-10 text-[#cccccc] hover:animate-pulse">
         Graph
-        <span className="text-[#8088b1]">QL</span>
+        <span className="text-[#5ed9d1]">QL</span>
       </h1>
 
       <form
-        className="flex flex-col gap-4 p-10 bg-[#1e1e2f] rounded-md w-1/2 mx-auto"
+        className="flex flex-col gap-4 p-10 bg-[#1b1b26] rounded-md w-1/2 mx-auto shadow-lg"
         onSubmit={handleFormSubmission}
       >
         <input
           type="text"
-          placeholder="Username"
-          className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#4e9bff] w-full transition- duration-300 ease-in-out "
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username or Email"
+          className="p-2 rounded-md border-2 border-transparent bg-[#2e2e38] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#5ed9d1] transition duration-300 ease-in-out w-full"
+          value={usernameOrEmail}
+          onChange={(e) => setUsernameOrEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#4e9bff] w-full transition- duration-300 ease-in-out"
+          className="p-2 rounded-md border-2 border-transparent bg-[#2e2e38] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#5ed9d1] transition duration-300 ease-in-out w-full"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <button
           type="submit"
-          className="bg-[#8088b1] p-2 rounded-md hover:bg-[#6e72a2] active:bg-[#626493] transition-all duration-300 ease-in-out"
+          className="bg-[#5ed9d1] text-lg p-2 rounded-md hover:bg-[#4bbab3] active:bg-[#43a19a] transition-all duration-300 ease-in-out text-[#1b1b26]"
         >
           Login
         </button>
       </form>
     </>
   );
-}
-
-function handleFormSubmission(event: React.FormEvent<HTMLFormElement>) {
-  event.preventDefault();
 }
 
 export default Login;
