@@ -1,4 +1,9 @@
+import { useState } from "react";
+
 function Login() {
+  // States for username and password input
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <>
       <h1
@@ -17,11 +22,15 @@ function Login() {
           type="text"
           placeholder="Username"
           className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#4e9bff] w-full transition- duration-300 ease-in-out "
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           className=" p-2 rounded-md border-2 border-[#3a3a4e] bg-[#3a3a4e] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#4e9bff] w-full transition- duration-300 ease-in-out"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <button
