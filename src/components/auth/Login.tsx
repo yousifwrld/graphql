@@ -15,7 +15,7 @@ function Login() {
 
     // Validate inputs
     if (!usernameOrEmail.trim() || !password.trim()) {
-      setErrorMessage("Please enter a username or email and password.");
+      setErrorMessage("error: No input fields can be empty.");
       return;
     }
 
@@ -41,9 +41,18 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        // Handle errors
       } else {
-        setErrorMessage("User does not exist or password incorrect");
+        // Handle errors
+        // Get the error message from the response
+        const errMessage = await response.text();
+        setErrorMessage(
+          // Format the error message
+          errMessage
+            .replace(/"/g, "")
+            .replace(/{/g, "")
+            .replace(/}/g, "")
+            .replace(/:/g, ": ")
+        );
         return;
       }
     } catch (error) {
