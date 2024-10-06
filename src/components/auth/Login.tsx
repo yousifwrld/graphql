@@ -7,6 +7,12 @@ function Login() {
 
   // State for error message
   const [errorMessage, setErrorMessage] = useState("");
+  // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  // Function to change the password visibility state
+  function changePasswordVisibility() {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  }
 
   // Function to handle form submission
   async function handleFormSubmission(event: React.FormEvent<HTMLFormElement>) {
@@ -41,6 +47,9 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+
+        // Redirect to the dashboard
+        window.location.href = "/dashboard";
       } else {
         // Handle errors
         // Get the error message from the response
@@ -71,18 +80,28 @@ function Login() {
         <form className="space-y-6" onSubmit={handleFormSubmission}>
           <input
             type="text"
-            placeholder="Username or Email"
+            placeholder="01 Username or Email"
             className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
             value={usernameOrEmail}
             onChange={(e) => setUsernameOrEmail(e.target.value)}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Password"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <i
+              id="eye"
+              className={`bx ${
+                showPassword ? "bx-hide" : "bx-show-alt"
+              } absolute right-4 top-3 text-2xl cursor-pointer text-gray-400 hover:text-white`}
+              onClick={changePasswordVisibility}
+            ></i>
+          </div>
 
           {errorMessage && (
             <p className="text-red-500 text-center italic">{errorMessage}</p>
