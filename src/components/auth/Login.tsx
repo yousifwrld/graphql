@@ -61,42 +61,42 @@ function Login() {
   }
 
   return (
-    <>
-      <h1 className="text-7xl font-bold text-center p-10 text-[#cccccc] hover:animate-pulse">
-        Graph
-        <span className="text-[#5ed9d1]">QL</span>
-      </h1>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-lg">
+        <h1 className="text-6xl font-extrabold text-center text-white mb-10">
+          Graph
+          <span className="text-[#5ed9d1]">QL</span>
+        </h1>
 
-      <form
-        className="flex flex-col gap-4 p-10 bg-[#1b1b26] rounded-md w-1/2 mx-auto shadow-lg"
-        onSubmit={handleFormSubmission}
-      >
-        <input
-          type="text"
-          placeholder="Username or Email"
-          className="p-2 rounded-md border-2 border-transparent bg-[#2e2e38] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#5ed9d1] transition duration-300 ease-in-out w-full"
-          value={usernameOrEmail}
-          onChange={(e) => setUsernameOrEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="p-2 rounded-md border-2 border-transparent bg-[#2e2e38] text-[#e0e0e0] outline-none focus:outline-none focus:border-[#5ed9d1] transition duration-300 ease-in-out w-full"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <form className="space-y-6" onSubmit={handleFormSubmission}>
+          <input
+            type="text"
+            placeholder="Username or Email"
+            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
+            value={usernameOrEmail}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        {errorMessage && (
-          <p className="text-red-500 italic text-center">{errorMessage}</p>
-        )}
-        <button
-          type="submit"
-          className="bg-[#5ed9d1] text-lg p-2 rounded-md hover:bg-[#4bbab3] active:bg-[#43a19a] transition-all duration-300 ease-in-out text-[#1b1b26]"
-        >
-          Login
-        </button>
-      </form>
-    </>
+          {errorMessage && (
+            <p className="text-red-500 text-center italic">{errorMessage}</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-[#5ed9d1] to-[#43a19a] hover:from-[#4bbab3] hover:to-[#43a19a] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 
