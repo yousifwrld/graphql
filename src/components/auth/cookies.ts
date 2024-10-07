@@ -21,4 +21,8 @@ function getUserIdFromCookie() {
   }
 }
 
-export { setCookies, getUserIdFromCookie };
+function getTokenFromCookie() {
+  return Cookies.get("token");
+}
+
+export { setCookies, getUserIdFromCookie, getTokenFromCookie };

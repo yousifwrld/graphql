@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserIdFromCookie } from "../auth/cookies";
+import { getTokenFromCookie } from "../auth/cookies";
 
 function UserInfo() {
   // Interface for user info "like a golang struct"
@@ -7,6 +7,8 @@ function UserInfo() {
     id: string;
     username: string;
     campus: string;
+    firstName: string;
+    lastName: string;
   }
 
   // State for user info, initialized to null
@@ -37,6 +39,9 @@ function UserInfo() {
         userInfo ? (
           <>
             <p className="text-white">ID: {userInfo.id}</p>
+            <p className="text-white">
+              Full Name: {userInfo.firstName} {userInfo.lastName}
+            </p>
             <p className="text-white">Username: {userInfo.username}</p>
             <p className="text-white">Campus: {userInfo.campus}</p>
           </>
@@ -51,15 +56,15 @@ function UserInfo() {
 export default UserInfo;
 
 async function fetchUserInfo() {
-  // Get the user ID
-  const userID = getUserIdFromCookie();
-
+  // Get the token from the cookie
+  const token = getTokenFromCookie();
   // Prepare the GraphQL query
   const query = `query {
-    user(where: {id: {_eq: "${userID}"}}) {
+    user {
       id
       login
       campus
+      attrs
     }
   }`;
 
@@ -71,13 +76,16 @@ async function fetchUserInfo() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ query }),
       }
     );
 
     if (!response.ok) {
+      console.log(response);
       throw new Error(`HTTP error! status: ${response.status}`);
+      return;
     }
 
     // Parse the response
@@ -85,8 +93,13 @@ async function fetchUserInfo() {
 
     if (data.data && data.data.user && data.data.user.length > 0) {
       // Destructure the user data
-      const { id, login: username, campus } = data.data.user[0];
-      return { id, username, campus };
+      const {
+        id,
+        login: username,
+        campus,
+        attrs: { firstName, lastName },
+      } = data.data.user[0];
+      return { id, username, campus, firstName, lastName };
     } else {
       console.log(response);
       throw new Error("User data not found");
