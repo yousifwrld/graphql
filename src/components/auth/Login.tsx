@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { setCookies } from "./cookies";
 
 function Login() {
   // States for usernameOrEmail and password input
@@ -45,9 +46,10 @@ function Login() {
 
       // Check if the request was successful
       if (response.ok) {
+        // Get the token from the response
         const data = await response.json();
-        console.log(data);
-
+        // Set the cookie with the token
+        setCookies(data);
         // Redirect to the dashboard
         window.location.href = "/dashboard";
       } else {
@@ -80,7 +82,7 @@ function Login() {
         <form className="space-y-6" onSubmit={handleFormSubmission}>
           <input
             type="text"
-            placeholder="01 Username or Email"
+            placeholder="01 Username/Email"
             className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
             value={usernameOrEmail}
             onChange={(e) => setUsernameOrEmail(e.target.value)}
@@ -109,7 +111,7 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-gradient-to-r from-[#5ed9d1] to-[#43a19a] hover:from-[#4bbab3] hover:to-[#43a19a] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
+            className="w-full py-3 rounded-lg bg-[#5ed9d1] hover:bg-[#47b3ab] active:bg-[#3b9690] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
           >
             Login
           </button>
