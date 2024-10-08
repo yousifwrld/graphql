@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 
 function setCookies(value: string) {
-  console.log(value);
   Cookies.set("token", value, { expires: 1 / 24, path: "/" });
 }
 
@@ -16,7 +15,6 @@ function getUserIdFromCookie() {
     // Extract the userId from the token
     const userId =
       decodedToken["https://hasura.io/jwt/claims"]["x-hasura-user-id"];
-    console.log(userId);
     return userId;
   }
 }

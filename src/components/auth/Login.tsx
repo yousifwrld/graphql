@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { setCookies } from "./cookies";
 
 function Login() {
+  // Navigate hook
+  const navigate = useNavigate();
   // States for usernameOrEmail and password input
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +54,7 @@ function Login() {
         // Set the cookie with the token
         setCookies(data);
         // Redirect to the dashboard
-        window.location.href = "/dashboard";
+        navigate("/dashboard");
       } else {
         // Handle errors
         // Get the error message from the response
