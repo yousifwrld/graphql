@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTokenFromCookie } from "../auth/cookies";
+import { fetchGraphQL } from "../../utils/query";
 
 function UserInfo() {
   // Interface for user info "like a golang struct"
@@ -18,9 +18,28 @@ function UserInfo() {
   useEffect(() => {
     // Function to fetch and set user info
     const fetchUser = async () => {
-      const data = await fetchUserInfo();
-      if (data) {
-        setUserInfo(data); // Set the user info in state
+      // Setup the query
+      const query = `{
+        user {
+          id
+          login
+          campus
+          attrs
+        }
+      }`;
+      const data = await fetchGraphQL(query);
+
+      if (data && data.data && data.data.user && data.data.user.length > 0) {
+        // Destructure the user data
+        const {
+          id,
+          login: username,
+          campus,
+          attrs: { firstName, lastName },
+        } = data.data.user[0];
+
+        // Set the user info in state
+        setUserInfo({ id, username, campus, firstName, lastName });
       }
     };
 
@@ -54,57 +73,3 @@ function UserInfo() {
 }
 
 export default UserInfo;
-
-async function fetchUserInfo() {
-  // Get the token from the cookie
-  const token = getTokenFromCookie();
-  // Prepare the GraphQL query
-  const query = `query {
-    user {
-      id
-      login
-      campus
-      attrs
-    }
-  }`;
-
-  // Send the GraphQL query
-  try {
-    const response = await fetch(
-      "https://learn.reboot01.com/api/graphql-engine/v1/graphql",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ query }),
-      }
-    );
-
-    if (!response.ok) {
-      console.log(response);
-      throw new Error(`HTTP error! status: ${response.status}`);
-      return;
-    }
-
-    // Parse the response
-    const data = await response.json();
-
-    if (data.data && data.data.user && data.data.user.length > 0) {
-      // Destructure the user data
-      const {
-        id,
-        login: username,
-        campus,
-        attrs: { firstName, lastName },
-      } = data.data.user[0];
-      return { id, username, campus, firstName, lastName };
-    } else {
-      console.log(response);
-      throw new Error("User data not found");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}

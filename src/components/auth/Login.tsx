@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setCookies } from "./cookies";
+import { setCookies } from "../../utils/cookies";
 
 function Login() {
   // Navigate hook

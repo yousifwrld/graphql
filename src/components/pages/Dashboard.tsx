@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import UserInfo from "../dashboard/UserInfo";
 import { useNavigate } from "react-router-dom";
-import { getTokenFromCookie } from "../auth/cookies";
+import { getTokenFromCookie } from "../../utils/cookies";
 function Dashboard() {
   const navigate = useNavigate();
   // Check if a valid token exists in cookies on component mount, and redirect to login page if not authenticated
