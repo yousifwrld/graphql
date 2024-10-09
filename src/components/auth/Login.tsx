@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCookies } from "../../utils/cookies";
+import { getTokenFromCookie } from "../../utils/cookies";
 
 function Login() {
   // Navigate hook
   const navigate = useNavigate();
+  // Check if a valid token exists in cookies on component mount, and redirect to dashboard if it does
+  useEffect(() => {
+    const token = getTokenFromCookie();
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
   // States for usernameOrEmail and password input
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");

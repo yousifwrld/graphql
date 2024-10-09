@@ -22,7 +22,7 @@ function Dashboard() {
         icon={<i className="bx bx-user"></i>}
       ></Card>
       <Card
-        title="Audits"
+        title="Audits History"
         content={<Audit />}
         icon={<i className="bx bx-history"></i>}
       ></Card>
