@@ -15,18 +15,20 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <>
-      <Card
-        title="User Info"
-        content={<UserInfo />}
-        icon={<i className="bx bx-user"></i>}
-      ></Card>
-      <Card
-        title="Audits History"
-        content={<Audit />}
-        icon={<i className="bx bx-history"></i>}
-      ></Card>
-    </>
+    <div className="bg-gray-900 min-h-screen">
+      <div className="grid grid-cols-3 gap-4 p-4">
+        <Card
+          title="User Info"
+          content={<UserInfo />}
+          icon={<i className="bx bx-user"></i>}
+        ></Card>
+        <Card
+          title="Audits History"
+          content={<Audit />}
+          icon={<i className="bx bx-history"></i>}
+        ></Card>
+      </div>
+    </div>
   );
 }
 
