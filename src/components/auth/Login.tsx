@@ -10,7 +10,7 @@ function Login() {
   useEffect(() => {
     const token = getTokenFromCookie();
     if (token) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [navigate]);
 
@@ -63,7 +63,7 @@ function Login() {
         // Set the cookie with the token
         setCookies(data);
         // Redirect to the dashboard
-        navigate("/dashboard");
+        navigate("/");
       } else {
         // Handle errors
         // Get the error message from the response

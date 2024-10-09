@@ -10,7 +10,7 @@ function Dashboard() {
   useEffect(() => {
     const token = getTokenFromCookie();
     if (!token) {
-      navigate("/");
+      navigate("/login");
     }
   }, [navigate]);
 
