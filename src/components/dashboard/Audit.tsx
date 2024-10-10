@@ -36,7 +36,17 @@ function Audit() {
     };
     fetchAudits();
   }, []);
-  return <></>;
+  return (
+    <>
+      <p className="text-white">Total audits: {audits?.length || 0}</p>
+      <p className="text-white">
+        Passed audits: {audits?.filter((audit) => audit.grade >= 1).length || 0}
+      </p>
+      <p className="text-white">
+        Failed audits: {audits?.filter((audit) => audit.grade < 1).length || 0}
+      </p>
+    </>
+  );
 }
 
 export default Audit;

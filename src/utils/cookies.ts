@@ -4,6 +4,10 @@ function setCookies(value: string) {
   Cookies.set("token", value, { expires: 1 / 24, path: "/" });
 }
 
+function deleteCookies() {
+  Cookies.remove("token");
+}
+
 function getUserIdFromCookie() {
   // Get the token from the cookie
   const token = Cookies.get("token");
@@ -23,4 +27,4 @@ function getTokenFromCookie() {
   return Cookies.get("token");
 }
 
-export { setCookies, getUserIdFromCookie, getTokenFromCookie };
+export { setCookies, getUserIdFromCookie, getTokenFromCookie, deleteCookies };

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getTokenFromCookie } from "../../utils/cookies";
 import Audit from "../dashboard/Audit";
 import Card from "../dashboard/Card";
+import Logout from "../auth/Logout";
 import { FaUser, FaHistory } from "react-icons/fa";
 function Dashboard() {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ function Dashboard() {
 
   return (
     <div className="bg-gray-900 min-h-screen">
+      <div className=" flex justify-end p-2 pb-0">
+        <Logout />
+      </div>
       <div className="grid grid-cols-3 gap-4 p-4">
         <Card title="User Info" content={<UserInfo />} icon={<FaUser />}></Card>
         <Card
