@@ -29,14 +29,15 @@ function UserInfo() {
       }`;
       const data = await fetchGraphQL(query);
 
-      if (data && data.data && data.data.user && data.data.user.length > 0) {
+      // Check if data exists
+      if (data && data.user && data.user.length > 0) {
         // Destructure the user data
         const {
           id,
           login: username,
           campus,
           attrs: { firstName, lastName },
-        } = data.data.user[0];
+        } = data.user[0];
 
         // Set the user info in state
         setUserInfo({ id, username, campus, firstName, lastName });

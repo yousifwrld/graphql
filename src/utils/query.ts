@@ -1,7 +1,7 @@
 import { getTokenFromCookie } from "./cookies";
 
 // Define the function to perform the GraphQL query
-export async function fetchGraphQL(query: string) {
+export async function fetchGraphQL(query: string, variables?: object) {
   // Get the token from the cookie
   const token = getTokenFromCookie();
 
@@ -15,7 +15,7 @@ export async function fetchGraphQL(query: string) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, variables }),
       }
     );
 
@@ -23,9 +23,9 @@ export async function fetchGraphQL(query: string) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // Parse the response
+    // Parse the response and return the data
     const data = await response.json();
-    return data;
+    return data.data;
   } catch (error) {
     console.error("Error fetching GraphQL data:", error);
     throw error;
