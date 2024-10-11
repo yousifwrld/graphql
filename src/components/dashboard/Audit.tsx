@@ -7,43 +7,53 @@ function Audit() {
   interface AuditInterface {
     grade: number;
   }
-  const [audits, setAudits] = useState<AuditInterface[] | null>(null);
+  const [auditsDone, setAuditsDone] = useState<AuditInterface[] | null>(null);
+  const [auditsReceived, setAuditsReceived] = useState<AuditInterface[] | null>(
+    null
+  );
 
   // Function to fetch and set user info
   useEffect(() => {
     const fetchAudits = async () => {
       const userID = getUserIdFromCookie();
 
-      // Query to get the audits where the user was the auditor
+      // Query with variables to get the audit history for the user
       const query = `
-      {
-        audit (where: {auditorId: {_eq: ${userID}}}) {
+      query getAudits($userID: Int!) {
+        auditsReceived: audit(where: { auditorId: { _neq: $userID } }) {
+          grade
+        }
+        auditsDone: audit(where: { auditorId: { _eq: $userID } }) {
           grade
         }
       }
     `;
-      const data = await fetchGraphQL(query);
+
+      const data = await fetchGraphQL(query, { userID });
       // Check if data exists
-      if (data && data.audit && data.audit.length > 0) {
+      if (data && data.auditsDone && data.auditsReceived) {
         // Filter the audit data to only include non-null grades
-        const audits: AuditInterface[] = data.audit.filter(
+        const auditsDone: AuditInterface[] = data.auditsDone.filter(
           (audit: AuditInterface) => audit.grade !== null
         );
-        console.log(audits);
-        setAudits(audits);
-        //TODO: Further filter audits based on passed or failed, > 1 == passed, < 1 == failed
+        const auditsReceived: AuditInterface[] = data.auditsReceived.filter(
+          (audit: AuditInterface) => audit.grade !== null
+        );
+
+        // Set the audit data in state
+        setAuditsDone(auditsDone);
+        setAuditsReceived(auditsReceived);
       }
     };
     fetchAudits();
   }, []);
   return (
     <>
-      <p className="text-white">Total audits: {audits?.length || 0}</p>
       <p className="text-white">
-        Passed audits: {audits?.filter((audit) => audit.grade >= 1).length || 0}
+        Audits done: {auditsDone ? auditsDone.length : 0}
       </p>
       <p className="text-white">
-        Failed audits: {audits?.filter((audit) => audit.grade < 1).length || 0}
+        Audits received: {auditsReceived ? auditsReceived.length : 0}
       </p>
     </>
   );

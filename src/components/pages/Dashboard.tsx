@@ -5,7 +5,8 @@ import { getTokenFromCookie } from "../../utils/cookies";
 import Audit from "../dashboard/Audit";
 import Card from "../dashboard/Card";
 import Logout from "../auth/Logout";
-import { FaUser, FaHistory } from "react-icons/fa";
+import { FaUser, FaHistory, FaTrophy } from "react-icons/fa";
+import XpOverTime from "../dashboard/XpOverTime";
 function Dashboard() {
   const navigate = useNavigate();
   // Check if a valid token exists in cookies on component mount, and redirect to login page if not authenticated
@@ -28,6 +29,11 @@ function Dashboard() {
           content={<Audit />}
           icon={<FaHistory />}
         ></Card>
+        <Card
+          title="XP over months"
+          content={<XpOverTime />}
+          icon={<FaTrophy />}
+        />
       </div>
     </div>
   );
