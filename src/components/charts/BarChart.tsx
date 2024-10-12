@@ -35,7 +35,7 @@ function BarChartComponent({ auditsDone, auditsReceived }: BarChartProps) {
         <XAxis dataKey="name" tick={{ fill: "white", fontSize: "12" }} />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <CartesianGrid />
+        <CartesianGrid strokeDasharray="3 3" />
         <Bar
           dataKey="auditsDone"
           fill="#ffffff"

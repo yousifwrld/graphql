@@ -53,15 +53,21 @@ function UserInfo() {
         // Display the user info
         userInfo ? (
           <>
-            <p className="text-white">ID: {userInfo.id}</p>
-            <p className="text-white">
+            <p className="text-white text-lg text-bold mb-2">
+              ID: {userInfo.id}
+            </p>
+            <p className="text-white text-lg text-bold mb-2">
               Full Name: {userInfo.firstName} {userInfo.lastName}
             </p>
-            <p className="text-white">Username: {userInfo.username}</p>
-            <p className="text-white">Campus: {userInfo.campus}</p>
+            <p className="text-white text-lg text-bold mb-2">
+              Username: {userInfo.username}
+            </p>
+            <p className="text-white text-lg text-bold mb-2">
+              Campus: {userInfo.campus}
+            </p>
           </>
         ) : (
-          <p className="text-white">Loading...</p>
+          <p className="text-white text-lg text-bold mb-2">Loading...</p>
         )
       }
     </>
