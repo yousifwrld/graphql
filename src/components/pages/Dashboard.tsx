@@ -4,7 +4,18 @@ import UserInfo from "../dashboard/UserInfo";
 import XpOverMonths from "../dashboard/XpOverMonths";
 import Logout from "../auth/Logout";
 import { FaUser, FaHistory, FaTrophy } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { getTokenFromCookie } from "../../utils/cookies";
+import { useEffect } from "react";
 function Dashboard() {
+  // if not logged in, redirect to login page
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!getTokenFromCookie()) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header with Logout */}
