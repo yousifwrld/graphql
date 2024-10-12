@@ -36,8 +36,20 @@ function BarChartComponent({ auditsDone, auditsReceived }: BarChartProps) {
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         <CartesianGrid />
-        <Bar dataKey="auditsDone" fill="#ffffff" />
-        <Bar dataKey="auditsReceived" fill=" #4bc6b8" />
+        <Bar
+          dataKey="auditsDone"
+          fill="#ffffff"
+          isAnimationActive={true}
+          animationBegin={0}
+          animationDuration={1000}
+        />
+        <Bar
+          dataKey="auditsReceived"
+          fill="#4bc6b8"
+          isAnimationActive={true}
+          animationBegin={500}
+          animationDuration={1000}
+        />
       </BarChart>
     </ResponsiveContainer>
   );
