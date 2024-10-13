@@ -6,6 +6,7 @@ interface TransactionInterface {
   id: number;
   amount: number;
   createdAt: string;
+  eventId: number;
 }
 
 function XpOverMonths() {
@@ -13,6 +14,7 @@ function XpOverMonths() {
   const [monthlyXp, setMonthlyXp] = useState<{ name: string; xp: number }[]>(
     []
   );
+  const [totalXp, setTotalXp] = useState<number>(0);
 
   useEffect(() => {
     const fetchXp = async () => {
@@ -23,6 +25,7 @@ function XpOverMonths() {
           id
           amount
           createdAt
+          eventId
         }
       }`;
 
@@ -31,8 +34,21 @@ function XpOverMonths() {
       // Check if data exists
       if (data && data.transaction && data.transaction.length > 0) {
         const transactions: TransactionInterface[] = data.transaction;
-        const monthlyXp = getMonthlyXp(transactions);
+
+        // Find the second lowest eventId
+        const secondLowestEventId = getSecondLowestEventId(transactions);
+
+        // Filter transactions with the second lowest eventId
+        const filteredTransactions = transactions.filter(
+          (transaction) => transaction.eventId === secondLowestEventId
+        );
+        console.log(filteredTransactions);
+
+        // Get monthly XP
+        const monthlyXp = getMonthlyXp(filteredTransactions);
         setMonthlyXp(monthlyXp);
+        const totalxp = getTotalXp(filteredTransactions);
+        setTotalXp(totalxp);
       }
     };
     fetchXp();
@@ -41,6 +57,15 @@ function XpOverMonths() {
   return (
     <>
       <LineChartComponent xpData={monthlyXp} />
+      {totalXp ? (
+        <div className="text-center text-white">
+          <h1 className="text-2xl">Total XP: {totalXp}</h1>
+        </div>
+      ) : (
+        <div>
+          <p className="text-center text-white">Could not calculate total XP</p>
+        </div>
+      )}
     </>
   );
 }
@@ -54,6 +79,22 @@ function getYearAndMonth(dateString: string): string {
   return `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}`;
+}
+
+// Function to get the second lowest eventId
+function getSecondLowestEventId(
+  transactions: TransactionInterface[]
+): number | null {
+  const uniqueEventIds = Array.from(
+    new Set(transactions.map((t) => t.eventId))
+  );
+
+  if (uniqueEventIds.length < 2) {
+    return null; // Handle case where there isn't a second lowest
+  }
+
+  uniqueEventIds.sort((a, b) => a - b); // Sort eventIds in ascending order
+  return uniqueEventIds[1]; // Return the second lowest eventId
 }
 
 // Group transactions by month and sum XP for each month
@@ -78,4 +119,13 @@ function getMonthlyXp(
     name: month,
     xp: parseFloat(monthlyXpMap[month].toFixed(2)),
   }));
+}
+
+function getTotalXp(transactions: TransactionInterface[]): number {
+  // Get the total xp
+  const totalXp = transactions.reduce((acc, transaction) => {
+    return acc + transaction.amount / 1000;
+  }, 0);
+  // Return the total as a float rounded to 2 decimal places
+  return parseFloat(totalXp.toFixed(2));
 }

@@ -33,7 +33,7 @@ function Dashboard() {
           <Card title="Audit Stats" content={<Audit />} icon={<FaHistory />} />
           {/* XP Over Months Section */}
           <Card
-            title="XP Over Months"
+            title="XP Progress Over Months"
             content={<XpOverMonths />}
             icon={<FaTrophy />}
           />
