@@ -16,7 +16,12 @@ interface LineChartProps {
 function LineChartComponent({ xpData }: LineChartProps) {
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <LineChart width={400} height={300} data={xpData}>
+      <LineChart
+        width={400}
+        height={300}
+        data={xpData}
+        margin={{ top: 20, right: 30 }}
+      >
         <XAxis dataKey="name" tick={{ fill: "white", fontSize: "12" }} />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
