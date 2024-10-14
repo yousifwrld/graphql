@@ -9,6 +9,7 @@ function UserInfo() {
     campus: string;
     firstName: string;
     lastName: string;
+    lastActivity: string;
   }
 
   // State for user info, initialized to null
@@ -18,13 +19,20 @@ function UserInfo() {
   useEffect(() => {
     // Function to fetch and set user info
     const fetchUser = async () => {
-      // Setup the query
+      // Setup the query to get the basic user info and the latest activity
       const query = `{
         user {
           id
           login
           campus
           attrs
+          progresses (where: {isDone: {_eq: true}, grade: {_gte: 1}} order_by: {id: desc}) {
+            id
+            object {
+              type
+              name
+            }
+          }
         }
       }`;
       const data = await fetchGraphQL(query);
@@ -37,10 +45,23 @@ function UserInfo() {
           login: username,
           campus,
           attrs: { firstName, lastName },
+          progresses,
         } = data.user[0];
 
+        // get the last passed activity and format it
+        const lastActivity = `${
+          progresses[0].object.type.charAt(0).toUpperCase() +
+          progresses[0].object.type.slice(1)
+        } - ${progresses[0].object.name}`;
         // Set the user info in state
-        setUserInfo({ id, username, campus, firstName, lastName });
+        setUserInfo({
+          id,
+          username,
+          campus,
+          firstName,
+          lastName,
+          lastActivity,
+        });
       }
     };
 
@@ -64,6 +85,9 @@ function UserInfo() {
             </p>
             <p className="text-white text-lg text-bold mb-2">
               Campus: {userInfo.campus}
+            </p>
+            <p className="text-white text-lg text-bold mb-2">
+              Last Activity: {userInfo.lastActivity}
             </p>
           </>
         ) : (
