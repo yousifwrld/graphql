@@ -29,7 +29,7 @@ function LineChartComponent({ xpData }: LineChartProps) {
         <Legend />
         <Line
           dataKey="xp"
-          stroke="#ffffff"
+          stroke="#8659e9"
           isAnimationActive={true}
           animationBegin={0}
           animationDuration={1000}

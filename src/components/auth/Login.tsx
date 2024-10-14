@@ -84,18 +84,18 @@ function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-lg">
+    <div className="flex items-center justify-center min-h-screen bg-[#010415]">
+      <div className="bg-[#060d1f] p-8 rounded-lg shadow-xl w-full max-w-lg">
         <h1 className="text-6xl font-extrabold text-center text-white mb-10">
           Graph
-          <span className="text-[#5ed9d1]">QL</span>
+          <span className="text-[#2558b2]">QL</span>
         </h1>
 
         <form className="space-y-6" onSubmit={handleFormSubmission}>
           <input
             type="text"
             placeholder="01 Username/Email"
-            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
+            className="w-full p-3 rounded-lg bg-[#010415] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2558b2] transition duration-300"
             value={usernameOrEmail}
             onChange={(e) => setUsernameOrEmail(e.target.value)}
           />
@@ -104,7 +104,7 @@ function Login() {
               type={showPassword ? "text" : "password"}
               id="password"
               placeholder="Password"
-              className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5ed9d1] transition duration-300"
+              className="w-full p-3 rounded-lg bg-[#010415] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2558b2] transition duration-300"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -123,7 +123,7 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-[#5ed9d1] hover:bg-[#47b3ab] active:bg-[#3b9690] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
+            className="w-full py-3 rounded-lg bg-[#2558b2] hover:bg-[#1f4b98] active:bg-[#1b4488] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
           >
             Login
           </button>

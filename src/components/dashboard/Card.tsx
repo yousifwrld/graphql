@@ -7,14 +7,14 @@ interface CardProps {
 
 function Card({ title, content, icon }: CardProps) {
   return (
-    <div className="bg-gray-800 rounded-md p-4 m-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+    <div className="bg-[#09122b] rounded-md p-4 m-2 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
       <div className="flex items-center">
-        <p className="flex-shrink-0 text-[#5ed9d1] text-xl">{icon}</p>
+        <p className="flex-shrink-0 text-[#2558b2] text-xl">{icon}</p>
         <div className="ml-3">
           <p className="text-xl font-bold text-white">{title}</p>
         </div>
       </div>
-      <hr className="my-2 border-gray-600" />
+      <hr className="my-2 border-white" />
       {content}
     </div>
   );

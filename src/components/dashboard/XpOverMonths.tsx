@@ -55,7 +55,7 @@ function XpOverMonths() {
       <LineChartComponent xpData={monthlyXp} />
       {totalXp ? (
         <div className="text-center text-white">
-          <h1 className="text-2xl">Total XP: {totalXp}</h1>
+          <h1 className="text-2xl">Total XP: {totalXp} kB</h1>
         </div>
       ) : (
         <div>
@@ -106,6 +106,6 @@ function getTotalXp(transactions: TransactionInterface[]): number {
   const totalXp = transactions.reduce((acc, transaction) => {
     return acc + transaction.amount / 1000;
   }, 0);
-  // Return the total as a float rounded to 2 decimal places
-  return parseFloat(totalXp.toFixed(2));
+  // Return the total as a float with no decimal places
+  return parseFloat(totalXp.toFixed(0));
 }

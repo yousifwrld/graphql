@@ -17,9 +17,9 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-[#010415] text-white">
       {/* Header with Logout */}
-      <header className="flex justify-between items-center p-4 bg-gray-800">
+      <header className="flex justify-between items-center p-4 bg-[#09122b]">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <Logout />
       </header>
@@ -30,10 +30,14 @@ function Dashboard() {
           {/* User Info Section */}
           <Card title="User Info" content={<UserInfo />} icon={<FaUser />} />
           {/* Audit Section */}
-          <Card title="Audit Stats" content={<Audit />} icon={<FaHistory />} />
+          <Card
+            title="Audit History"
+            content={<Audit />}
+            icon={<FaHistory />}
+          />
           {/* XP Over Months Section */}
           <Card
-            title="XP Progress Over Months"
+            title="XP Gained Per Month"
             content={<XpOverMonths />}
             icon={<FaTrophy />}
           />

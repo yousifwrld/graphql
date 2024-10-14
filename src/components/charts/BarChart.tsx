@@ -38,14 +38,14 @@ function BarChartComponent({ auditsDone, auditsReceived }: BarChartProps) {
         <CartesianGrid strokeDasharray="3 3" />
         <Bar
           dataKey="auditsDone"
-          fill="#ffffff"
+          fill="#8659e9"
           isAnimationActive={true}
           animationBegin={0}
           animationDuration={1000}
         />
         <Bar
           dataKey="auditsReceived"
-          fill="#4bc6b8"
+          fill="#2463e3"
           isAnimationActive={true}
           animationBegin={500}
           animationDuration={1000}
