@@ -6,7 +6,6 @@ interface TransactionInterface {
   id: number;
   amount: number;
   createdAt: string;
-  eventId: number;
 }
 
 function XpOverMonths() {
@@ -18,16 +17,22 @@ function XpOverMonths() {
 
   useEffect(() => {
     const fetchXp = async () => {
-      // Query to get all xp transactions in order
+      // Query to get all xp transactions in bh module in order
       const query = `
       {
-        transaction(where:{type: { _eq: "xp" } } , order_by: { id: asc }) {
+        transaction(
+          where: { 
+            type: { _eq: "xp" }, 
+            event: { object: { name: { _eq: "Module" } } } 
+          }, 
+          order_by: { id: asc }
+        ) {
           id
           amount
           createdAt
-          eventId
+          }
         }
-      }`;
+      `;
 
       const data = await fetchGraphQL(query);
 
@@ -35,19 +40,10 @@ function XpOverMonths() {
       if (data && data.transaction && data.transaction.length > 0) {
         const transactions: TransactionInterface[] = data.transaction;
 
-        // Find the second lowest eventId
-        const secondLowestEventId = getSecondLowestEventId(transactions);
-
-        // Filter transactions with the second lowest eventId
-        const filteredTransactions = transactions.filter(
-          (transaction) => transaction.eventId === secondLowestEventId
-        );
-        console.log(filteredTransactions);
-
-        // Get monthly XP
-        const monthlyXp = getMonthlyXp(filteredTransactions);
+        // Get monthly and total XP
+        const monthlyXp = getMonthlyXp(transactions);
+        const totalxp = getTotalXp(transactions);
         setMonthlyXp(monthlyXp);
-        const totalxp = getTotalXp(filteredTransactions);
         setTotalXp(totalxp);
       }
     };
@@ -79,22 +75,6 @@ function getYearAndMonth(dateString: string): string {
   return `${date.getFullYear()}-${(date.getMonth() + 1)
     .toString()
     .padStart(2, "0")}`;
-}
-
-// Function to get the second lowest eventId
-function getSecondLowestEventId(
-  transactions: TransactionInterface[]
-): number | null {
-  const uniqueEventIds = Array.from(
-    new Set(transactions.map((t) => t.eventId))
-  );
-
-  if (uniqueEventIds.length < 2) {
-    return null; // Handle case where there isn't a second lowest
-  }
-
-  uniqueEventIds.sort((a, b) => a - b); // Sort eventIds in ascending order
-  return uniqueEventIds[1]; // Return the second lowest eventId
 }
 
 // Group transactions by month and sum XP for each month
