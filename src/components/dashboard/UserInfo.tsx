@@ -19,40 +19,46 @@ function UserInfo() {
   useEffect(() => {
     // Function to fetch and set user info
     const fetchUser = async () => {
-      // Setup the query to get the basic user info and the latest activity
+      // Setup the query to get the basic user info
       const query = `{
         user {
           id
           login
           campus
           attrs
-          progresses (where: {isDone: {_eq: true}, grade: {_gte: 1}} order_by: {id: desc}) {
-            id
-            object {
-              type
-              name
-            }
+        }
+      }`;
+
+      // Query to get the latest passed activity by the user
+      const query2 = `{
+        progress (where: {isDone: {_eq: true}, grade: {_gte: 1}} order_by: {id: desc}) {
+          id
+          object {
+            type
+            name
           }
         }
       }`;
       const data = await fetchGraphQL(query);
+      const activityData = await fetchGraphQL(query2);
 
       // Check if data exists
-      if (data && data.user && data.user.length > 0) {
+      if (data && data.user && data.user.length > 0 && activityData) {
         // Destructure the user data
         const {
           id,
           login: username,
           campus,
           attrs: { firstName, lastName },
-          progresses,
         } = data.user[0];
 
+        // Destructure the activity data
+        const progress = activityData.progress;
         // get the last passed activity and format it
         const lastActivity = `${
-          progresses[0].object.type.charAt(0).toUpperCase() +
-          progresses[0].object.type.slice(1)
-        } - ${progresses[0].object.name}`;
+          progress[0].object.type.charAt(0).toUpperCase() +
+          progress[0].object.type.slice(1)
+        } - ${progress[0].object.name}`;
         // Set the user info in state
         setUserInfo({
           id,
