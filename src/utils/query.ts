@@ -25,6 +25,10 @@ export async function fetchGraphQL(query: string, variables?: object) {
 
     // Parse the response and return the data
     const data = await response.json();
+    // Return the data or throw an error
+    if (data.errors) {
+      throw new Error(data.errors[0].message);
+    }
     return data.data;
   } catch (error) {
     console.error("Error fetching GraphQL data:", error);
