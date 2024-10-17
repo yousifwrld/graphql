@@ -14,6 +14,7 @@ function UserInfo() {
 
   // State for user info, initialized to an empty object
   const [userInfo, setUserInfo] = useState<userInfoInterface | null>(null);
+  // Error and loading state
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -74,10 +75,13 @@ function UserInfo() {
             lastActivity,
           });
         } else {
-          setError("User or activity data not found");
+          setError("Could not fetch user data");
         }
-      } catch (err: any) {
-        setError(err.message || "An unexpected error occurred");
+      } catch (error: any) {
+        setError(
+          error.message ||
+            "An unexpected error occurred while fetching user data"
+        );
       } finally {
         // Set loading to false after fetching data, regardless of success or failure
         setIsLoading(false);
@@ -89,13 +93,15 @@ function UserInfo() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && (
         <p className="text-white text-center text-lg text-bold mb-2">
           Loading...
         </p>
-      ) : error ? (
+      )}
+      {error && (
         <p className="text-white text-center text-lg text-bold mb-2">{error}</p>
-      ) : userInfo ? (
+      )}
+      {userInfo ? (
         <>
           <p className="text-white text-lg text-bold mb-2">ID: {userInfo.id}</p>
           <p className="text-white text-lg text-bold mb-2">
@@ -111,9 +117,7 @@ function UserInfo() {
             Last Activity: {userInfo.lastActivity}
           </p>
         </>
-      ) : (
-        <p className="text-white text-lg text-bold mb-2">No data available</p>
-      )}
+      ) : null}
     </>
   );
 }

@@ -14,6 +14,9 @@ function XpOverMonths() {
     []
   );
   const [totalXp, setTotalXp] = useState<number>(0);
+  // Error and loading state
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchXp = async () => {
@@ -34,17 +37,28 @@ function XpOverMonths() {
         }
       `;
 
-      const data = await fetchGraphQL(query);
+      try {
+        const data = await fetchGraphQL(query);
 
-      // Check if data exists
-      if (data && data.transaction && data.transaction.length > 0) {
-        const transactions: TransactionInterface[] = data.transaction;
+        // Check if data exists
+        if (data && data.transaction && data.transaction.length > 0) {
+          const transactions: TransactionInterface[] = data.transaction;
 
-        // Get monthly and total XP
-        const monthlyXp = getMonthlyXp(transactions);
-        const totalxp = getTotalXp(transactions);
-        setMonthlyXp(monthlyXp);
-        setTotalXp(totalxp);
+          // Get monthly and total XP
+          const monthlyXp = getMonthlyXp(transactions);
+          const totalxp = getTotalXp(transactions);
+          setMonthlyXp(monthlyXp);
+          setTotalXp(totalxp);
+        } else {
+          setError("Could not fetch XP data");
+        }
+      } catch (error: any) {
+        setError(
+          error.message || "An unexpected error occurred while fetching XP data"
+        );
+      } finally {
+        // Set loading to false after fetching data, regardless of success or failure
+        setIsLoading(false);
       }
     };
     fetchXp();
@@ -52,16 +66,23 @@ function XpOverMonths() {
 
   return (
     <>
-      <LineChartComponent xpData={monthlyXp} />
-      {totalXp ? (
-        <div className="text-center text-white">
-          <h1 className="text-2xl">Total XP: {totalXp} kB</h1>
-        </div>
-      ) : (
-        <div>
-          <p className="text-center text-white">Could not calculate total XP</p>
-        </div>
+      {isLoading && (
+        <p className="text-white text-center text-lg text-bold mb-2">
+          Loading...
+        </p>
       )}
+      {error && (
+        <p className="text-white text-center text-lg text-bold mb-2">{error}</p>
+      )}
+
+      {monthlyXp.length > 0 && totalXp ? (
+        <div>
+          <LineChartComponent xpData={monthlyXp} />
+          <div className="text-center text-white">
+            <h1 className="text-2xl">Total XP: {totalXp} kB</h1>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
