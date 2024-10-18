@@ -20,6 +20,7 @@ function Login() {
 
   // State for error message
   const [errorMessage, setErrorMessage] = useState("");
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
   // State for password visibility
   const [showPassword, setShowPassword] = useState(false);
   // Function to change the password visibility state
@@ -34,7 +35,15 @@ function Login() {
 
     // Validate inputs
     if (!usernameOrEmail.trim() || !password.trim()) {
-      setErrorMessage("error: No input fields can be empty.");
+      // Set error message and input empty state
+      setErrorMessage("Please fill in all the fields.");
+      setIsInputEmpty(true);
+
+      // Clear the error message and input empty state after 3 seconds
+      setTimeout(() => {
+        setErrorMessage("");
+        setIsInputEmpty(false);
+      }, 3000);
       return;
     }
 
@@ -76,6 +85,11 @@ function Login() {
             .replace(/}/g, "")
             .replace(/:/g, ": ")
         );
+
+        // Clear the error message after 3 seconds
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
         return;
       }
     } catch (error) {
@@ -95,7 +109,9 @@ function Login() {
           <input
             type="text"
             placeholder="01 Username/Email"
-            className="w-full p-3 rounded-lg bg-[#10151f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff0401] transition duration-300"
+            className={`w-full p-3 rounded-lg bg-[#10151f] ${
+              isInputEmpty ? "ring-2 ring-red-700" : null
+            } text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff0401] transition duration-300`}
             value={usernameOrEmail}
             onChange={(e) => setUsernameOrEmail(e.target.value)}
           />
@@ -104,7 +120,9 @@ function Login() {
               type={showPassword ? "text" : "password"}
               id="password"
               placeholder="Password"
-              className="w-full p-3 rounded-lg bg-[#10151f] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff0401] transition duration-300"
+              className={`w-full p-3 rounded-lg bg-[#10151f] ${
+                isInputEmpty ? "ring-2 ring-red-700" : null
+              } text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff0401] transition duration-300`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -118,15 +136,17 @@ function Login() {
           </div>
 
           {errorMessage && (
-            <p className="text-red-500 text-center italic">{errorMessage}</p>
+            <p className="text-red-700 text-center italic">{errorMessage}</p>
           )}
 
-          <button
-            type="submit"
-            className="w-full py-3 rounded-lg bg-[#ff0401] hover:bg-[#a70300] active:bg-[#850200] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
-          >
-            Login
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="w-1/2 py-3 rounded-lg bg-[#ff0401] hover:bg-[#9e0300] active:bg-[#850200] text-white font-semibold shadow-lg transition-all duration-300 ease-in-out"
+            >
+              Login
+            </button>
+          </div>
         </form>
       </div>
     </div>
