@@ -17,9 +17,9 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-[#010415] text-white">
+    <div className="min-h-screen bg-[#10151f] text-white">
       {/* Header with Logout */}
-      <header className="flex justify-between items-center p-4 bg-[#09122b]">
+      <header className="flex justify-between items-center p-4 bg-[#1c2533]">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <Logout />
       </header>

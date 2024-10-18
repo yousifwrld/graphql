@@ -111,7 +111,7 @@ function Audit() {
               auditsReceived={auditsReceived ? auditsReceived.length : 0}
             />
             <h1 className="text-2xl">
-              Audit Ratio:
+              Audit Ratio:{" "}
               {auditRatio ? auditRatio : "Could not calculate audit ratio"}
             </h1>
           </div>
