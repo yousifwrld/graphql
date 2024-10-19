@@ -3,10 +3,11 @@ import Card from "../dashboard/Card";
 import UserInfo from "../dashboard/UserInfo";
 import XpOverMonths from "../dashboard/XpOverMonths";
 import Logout from "../auth/Logout";
-import { FaUser, FaHistory, FaTrophy } from "react-icons/fa";
+import { FaUser, FaHistory, FaTrophy, FaCode } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getTokenFromCookie } from "../../utils/cookies";
 import { useEffect } from "react";
+import Skills from "../dashboard/Skills";
 function Dashboard() {
   // if not logged in, redirect to login page
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Dashboard() {
 
       {/* Main content section */}
       <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2">
           {/* User Info Section */}
           <Card title="User Info" content={<UserInfo />} icon={<FaUser />} />
           {/* Audit Section */}
@@ -41,6 +42,7 @@ function Dashboard() {
             content={<XpOverMonths />}
             icon={<FaTrophy />}
           />
+          <Card title="Skills Gained" content={<Skills />} icon={<FaCode />} />
         </div>
       </div>
     </div>
