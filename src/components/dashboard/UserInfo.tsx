@@ -103,19 +103,19 @@ function UserInfo() {
       )}
       {userInfo ? (
         <>
-          <p className="text-white text-lg text-bold mb-2">
+          <p className="text-white text-2xl text-bold mb-2">
             <strong>ID:</strong> {userInfo.id}
           </p>
-          <p className="text-white text-lg text-bold mb-2">
+          <p className="text-white text-2xl text-bold mb-2">
             <strong>Full Name:</strong> {userInfo.firstName} {userInfo.lastName}
           </p>
-          <p className="text-white text-lg text-bold mb-2">
+          <p className="text-white text-2xl text-bold mb-2">
             <strong>Username:</strong> {userInfo.username}
           </p>
-          <p className="text-white text-lg text-bold mb-2">
+          <p className="text-white text-2xl text-bold mb-2">
             <strong>Campus:</strong> {userInfo.campus}
           </p>
-          <p className="text-white text-lg text-bold mb-2">
+          <p className="text-white text-2xl text-bold mb-2">
             <strong>Last Activity:</strong> {userInfo.lastActivity}
           </p>
         </>
