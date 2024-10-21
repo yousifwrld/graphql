@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./components/auth/Login.tsx";
-import Dashboard from "./components/pages/Dashboard.tsx";
-import NotFound from "./components/pages/NotFound.tsx";
+import Login from "./components/auth/Login";
+import Dashboard from "./components/pages/Dashboard";
+import NotFound from "./components/pages/NotFound";
 
 function App() {
   return (
