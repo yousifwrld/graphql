@@ -4,7 +4,6 @@ import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
-  PolarRadiusAxis,
   ResponsiveContainer,
 } from "recharts";
 
@@ -19,7 +18,6 @@ function RadarChartComponent({ data }: RadarChartProps) {
       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey="name" />
-        <PolarRadiusAxis tick={false} />
         <Radar
           name="Amount"
           dataKey="amount"
