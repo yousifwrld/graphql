@@ -4,8 +4,9 @@ import Dashboard from "./components/pages/Dashboard";
 import NotFound from "./components/pages/NotFound";
 
 function App() {
+  const basename = process.env.PUBLIC_URL || "";
   return (
-    <Router>
+    <Router basename={basename}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
