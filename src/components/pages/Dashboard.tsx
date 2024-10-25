@@ -4,6 +4,7 @@ import UserInfo from "../dashboard/UserInfo";
 import XpOverMonths from "../dashboard/XpOverMonths";
 import Logout from "../auth/Logout";
 import { FaUser, FaHistory, FaTrophy, FaCode } from "react-icons/fa";
+import { GrGraphQl } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { getTokenFromCookie } from "../../utils/cookies";
 import { useEffect } from "react";
@@ -21,7 +22,10 @@ function Dashboard() {
     <div className="min-h-screen bg-[#10151f] text-white">
       {/* Header with Logout */}
       <header className="flex justify-between items-center p-4 bg-[#1c2533]">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <h1 className="text-3xl font-bold">
+          <GrGraphQl className="inline mr-3 text-5xl text-[#ff0401]" />
+          Dashboard
+        </h1>
         <Logout />
       </header>
 
