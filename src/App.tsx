@@ -1,4 +1,4 @@
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/pages/Dashboard";
 import NotFound from "./components/pages/NotFound";
@@ -6,7 +6,6 @@ import NotFound from "./components/pages/NotFound";
 function App() {
   return (
     <Router>
-      {/* Using HashRouter here */}
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
